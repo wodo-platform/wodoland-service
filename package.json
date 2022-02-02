@@ -1,10 +1,10 @@
 {
-  "name": "@wodo-platform/wodolandservice",
+  "name": "@wodo-platform/wodoland-service",
   "version": "1.0.0",
   "description": "The main repository contains all business logic implementations, communication services/transports (REST, websockets), and persistency operations. The service is initially implemented in a monolithic fashion to drive PoC cases. It will be shaped into micro-services progressively.",
   "author": "Wodo Platform",
   "repository": {
-    "url": "git@github.com:wodo-platform/wodolandservice.git"
+    "url": "git@github.com:wodo-platform/wodoland-service.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
