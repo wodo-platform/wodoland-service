@@ -1,15 +1,19 @@
+import supertest, * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../../service/prisma.service';
-import { DemoController } from './demo.controller';
-import { DemoService } from './demo.service';
+import { PrismaService } from '../src/service/prisma.service';
+import { DemoController } from '../src/module/demo/demo.controller';
+import { DemoService } from '../src/module/demo/demo.service';
 import { mockDeep } from 'jest-mock-extended'
 import { Demo } from '.prisma/client';
+import { INestApplication } from '@nestjs/common';
+
 
 describe("DemoController", () => {
 
+    let app: INestApplication;
     var demoModuleRef : TestingModule;
-    let demoController:DemoController;
-    let demoService:DemoService;
+    let demoController: DemoController;
+    let demoService: DemoService;
     let prismaService;
 
     beforeAll(async () => {
@@ -23,8 +27,11 @@ describe("DemoController", () => {
 
         demoModuleRef = await Test.createTestingModule({
             controllers: [DemoController],
-            providers: [String,DemoService, PrismaServiceProvider],
+            providers: [DemoService, PrismaServiceProvider],
         }).compile();
+
+        app = demoModuleRef.createNestApplication();
+        await app.init();
     });
 
     beforeEach(async () => {
@@ -33,9 +40,9 @@ describe("DemoController", () => {
         demoController = demoModuleRef.get<DemoController>(DemoController)
     });
 
-    describe('findAll', () => {
-        it('should return an array of demos', async () => {
-          const demo: Demo = {
+    it(`/GET demos`, () => {
+
+        const demo: Demo = {
             id: 1,
             name: "Tesst Record",
             deleted: false,
@@ -44,15 +51,23 @@ describe("DemoController", () => {
             updatedAt: new Date()
           };
 
-          let result:Demo[] = [demo];
+        //let result:Demo[] = [demo];
+        let data:Array<Demo> = new Array<Demo>();
+        data.push(demo);
 
-          prismaService.demo.findMany.mockResolvedValue(result);
+        prismaService.demo.findMany.mockResolvedValue(data);
 
-          // since PrismaService is mocked, both controller and respective service class is tested here.
-          // No need to mock service class methods
-          //jest.spyOn(demoController, 'findAll').mockImplementation(() => result);
+        return request(app.getHttpServer())
+          .get('/demos')
+          .expect(200)
+          .expect(res => {
+            expect(JSON.parse(res.text)[0]["name"]).toEqual(data[0].name);
+          })
+          // https://github.com/visionmedia/supertest
+    });
     
-          expect(await demoController.findAll()).toBe(result);
-        });
-      });
+    afterAll(async () => {
+        await app.close();
+    });
+
 });

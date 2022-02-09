@@ -16,9 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "This is wodo demo service as a template to create NodeJS based modules and services."', () => {
-      expect(appController.getHello()).toBe(
-        'This is wodo demo service as a template to create NodeJS based modules and services.',
-      );
+      expect(appController.getHello()).toBe('This is wodo demo service as a template to create NodeJS based modules and services.');
     });
   });
 });
