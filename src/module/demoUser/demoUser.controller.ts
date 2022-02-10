@@ -11,7 +11,10 @@ import {
   HttpCode,
   ParseIntPipe,
   ParseBoolPipe,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -28,7 +31,7 @@ import {
   VALIDATION_SCHEMA_DEMO_UPDATE,
 } from '../../common/pipes/validation';
 
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @ApiTags('demoUsers')
 @Controller('demoUsers')
 export class DemoUserController {
@@ -41,13 +44,15 @@ export class DemoUserController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Post()
-  async createDemo(
-    @Body(new ValidationPipe(VALIDATION_SCHEMA_DEMO_CREATE))
+  async createDemoUser(
+    @Body()
+    // @Body(new ValidationPipe(VALIDATION_SCHEMA_DEMO_CREATE))
     DemoUserCreateDto: DemoUserCreateDto,
   ) {
     return await this.DemoUserService.create(DemoUserCreateDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update demoUser' })
   @ApiResponse({
     status: 201,
@@ -55,13 +60,14 @@ export class DemoUserController {
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Put()
-  async updateDemo(
+  async updateDemoUser(
     @Body(new ValidationPipe(VALIDATION_SCHEMA_DEMO_UPDATE))
     DemoUserUpdateDto: DemoUserUpdateDto,
   ) {
     return await this.DemoUserService.update(DemoUserUpdateDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Find all demoUsers' })
   @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
   @Get('')
@@ -69,6 +75,7 @@ export class DemoUserController {
     return await this.DemoUserService.findAll(null, null, null);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Find all demoUsers by the given query string params.',
   })
@@ -81,6 +88,7 @@ export class DemoUserController {
     return await this.DemoUserService.findAll(null, null, null);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Find demoUser by id.' })
   @ApiParam({
     name: 'id',
@@ -98,6 +106,7 @@ export class DemoUserController {
     return await this.DemoUserService.findById(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   @ApiOperation({ summary: 'Delete demoUser' })
   @ApiResponse({
