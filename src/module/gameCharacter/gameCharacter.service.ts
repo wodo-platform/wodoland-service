@@ -122,6 +122,23 @@ export class GameCharacterService {
   }
 
   /**
+   * Finds entity by the given id
+   *
+   * @param uid
+   * @returns GameCharacters
+   */
+  async findByUid(uid: number): Promise<GameCharacters[]> {
+    const gameCharacters: GameCharacters[] =
+      (await this.prisma.gameCharacters.findMany({
+        where: {
+          uid: uid,
+        },
+      })) as GameCharacters[];
+
+    return gameCharacters;
+  }
+
+  /**
    * Deletes entity by the given id
    *
    * @param id

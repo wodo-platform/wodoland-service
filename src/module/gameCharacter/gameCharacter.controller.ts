@@ -98,11 +98,29 @@ export class GameCharacterController {
     status: 200,
     description: 'Return gameCharacter found by the given id.',
   })
-  @Get(':id')
+  @Get('/resources/:id')
   async findById(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<GameCharacters> {
     return await this.GameCharacterService.findById(id);
+  }
+
+  @ApiOperation({ summary: 'Find gameCharacters by uid.' })
+  @ApiParam({
+    name: 'uid',
+    description: 'User id',
+    required: true,
+    allowEmptyValue: false,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Return gameCharacter found by the given id.',
+  })
+  @Get('/game_characters/:uid')
+  async findByUid(
+    @Param('uid', ParseIntPipe) uid: number,
+  ): Promise<GameCharacters[]> {
+    return await this.GameCharacterService.findByUid(uid);
   }
 
   @HttpCode(204)
