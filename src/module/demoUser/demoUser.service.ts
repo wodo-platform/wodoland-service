@@ -78,6 +78,35 @@ export class DemoUserService {
   }
 
   /**
+   * Finds entity by login information
+   *
+   * @param email
+   * @param password
+   * @returns DemoUser
+   */
+  async findOne(email: string, password: string): Promise<DemoUser> {
+    // TODO: validate method params
+    const demoUser: DemoUser = (await this.prisma.demoUser.findFirst({
+      where: {
+        AND: [
+          {
+            email: {
+              equals: email,
+            },
+          },
+          {
+            password: {
+              equals: password,
+            },
+          },
+        ],
+      },
+    })) as DemoUser;
+
+    return demoUser;
+  }
+
+  /**
    * Finds entity by the given id
    *
    * @param id
@@ -94,7 +123,9 @@ export class DemoUserService {
 
     if (demoUser) {
       this.logger.debug(
-        `found demoUser[${JSON.stringify(demoUser)}] in the datastore by demoUserId[${id}]`,
+        `found demoUser[${JSON.stringify(
+          demoUser,
+        )}] in the datastore by demoUserId[${id}]`,
       );
     } else {
       this.logger.debug(
