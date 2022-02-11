@@ -68,34 +68,11 @@ export class DemoUserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Find all demoUsers' })
-  @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
-  @Get('')
-  async findAll(): Promise<DemoUser[]> {
-    return await this.DemoUserService.findAll(null, null, null);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'See if login is working' })
   @ApiResponse({ status: 200, description: 'See if user is still logged in' })
-  @Get('ping')
+  @Get('/ping')
   async pingLogin(): Promise<boolean> {
     return true;
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({
-    summary: 'Find all demoUsers by the given query string params.',
-  })
-  @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
-  @Get('filter')
-  async findByQueryParam(
-    @Query('id') id: number,
-    @Query('email') email: string,
-    @Query('name') name: string,
-    // @Query('active', ParseBoolPipe) active: boolean,
-  ): Promise<DemoUser[]> {
-    return await this.DemoUserService.findAll(id, name, email);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -111,7 +88,7 @@ export class DemoUserController {
     status: 200,
     description: 'Return demoUser found by the given id.',
   })
-  @Get(':id')
+  @Get('/resources/:id')
   async findById(@Param('id', ParseIntPipe) id: number): Promise<DemoUser> {
     return await this.DemoUserService.findById(id);
   }
@@ -122,9 +99,32 @@ export class DemoUserController {
     status: 200,
     description: 'Return demoUser found by the given email.',
   })
-  @Get('email')
+  @Get('/email')
   async findByEmail(@Query('email') email: string): Promise<DemoUser> {
     return await this.DemoUserService.findByEmail(email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Find all demoUsers by the given query string params.',
+  })
+  @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
+  @Get('/filter')
+  async findByQueryParam(
+    @Query('id') id: number,
+    @Query('email') email: string,
+    @Query('name') name: string,
+    // @Query('active', ParseBoolPipe) active: boolean,
+  ): Promise<DemoUser[]> {
+    return await this.DemoUserService.findAll(id, name, email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Find all demoUsers' })
+  @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
+  @Get()
+  async findAll(): Promise<DemoUser[]> {
+    return await this.DemoUserService.findAll(null, null, null);
   }
 
   @UseGuards(JwtAuthGuard)

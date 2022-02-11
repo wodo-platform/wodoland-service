@@ -146,7 +146,7 @@ export class DemoUserService {
     // TODO: validate method params
     const demoUser: DemoUser = (await this.prisma.demoUser.findUnique({
       where: {
-        email: email,
+        email,
       },
     })) as DemoUser;
     return demoUser;
