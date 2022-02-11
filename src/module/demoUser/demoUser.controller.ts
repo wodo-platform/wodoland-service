@@ -46,8 +46,8 @@ export class DemoUserController {
   @Post()
   async createDemoUser(
     @Body()
-    // @Body(new ValidationPipe(VALIDATION_SCHEMA_DEMO_CREATE))
-    DemoUserCreateDto: DemoUserCreateDto,
+    DemoUserCreateDto: // @Body(new ValidationPipe(VALIDATION_SCHEMA_DEMO_CREATE))
+    DemoUserCreateDto,
   ) {
     return await this.DemoUserService.create(DemoUserCreateDto);
   }
@@ -76,16 +76,26 @@ export class DemoUserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'See if login is working' })
+  @ApiResponse({ status: 200, description: 'See if user is still logged in' })
+  @Get('ping')
+  async pingLogin(): Promise<boolean> {
+    return true;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Find all demoUsers by the given query string params.',
   })
   @ApiResponse({ status: 200, description: 'Return all demoUsers.' })
   @Get('filter')
   async findByQueryParam(
-    @Query('desc') desc: string,
-    @Query('deleted', ParseBoolPipe) active: boolean,
+    @Query('id') id: number,
+    @Query('email') email: string,
+    @Query('name') name: string,
+    // @Query('active', ParseBoolPipe) active: boolean,
   ): Promise<DemoUser[]> {
-    return await this.DemoUserService.findAll(null, null, null);
+    return await this.DemoUserService.findAll(id, name, email);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -104,6 +114,17 @@ export class DemoUserController {
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number): Promise<DemoUser> {
     return await this.DemoUserService.findById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Find demoUser by email.' })
+  @ApiResponse({
+    status: 200,
+    description: 'Return demoUser found by the given email.',
+  })
+  @Get('email')
+  async findByEmail(@Query('email') email: string): Promise<DemoUser> {
+    return await this.DemoUserService.findByEmail(email);
   }
 
   @UseGuards(JwtAuthGuard)

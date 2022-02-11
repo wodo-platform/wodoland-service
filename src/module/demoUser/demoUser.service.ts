@@ -137,6 +137,22 @@ export class DemoUserService {
   }
 
   /**
+   * Finds entity by the given email
+   *
+   * @param email
+   * @returns DemoUser
+   */
+  async findByEmail(email: string): Promise<DemoUser> {
+    // TODO: validate method params
+    const demoUser: DemoUser = (await this.prisma.demoUser.findUnique({
+      where: {
+        email: email,
+      },
+    })) as DemoUser;
+    return demoUser;
+  }
+
+  /**
    * Deletes entity by the given id
    *
    * @param id
