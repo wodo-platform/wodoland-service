@@ -8,6 +8,7 @@ import { DemoUserModule } from './module/demoUser/demoUser.module';
 import { WPErrorsInterceptor } from '@wodo-platform/wp-shared-lib/dist/wodoplatform/error/wp.errors.interceptor';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { GameCharacterModule } from './module/gameCharacter/gameCharacter.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     ]),
     AuthModule,
     UsersModule,
+    GameCharacterModule,
   ],
   controllers: [AppController],
   providers: [

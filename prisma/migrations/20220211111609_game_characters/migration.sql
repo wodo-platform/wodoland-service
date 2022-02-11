@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE `GameCharacters` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `uid` INTEGER NOT NULL,
+    `faction` VARCHAR(191) NOT NULL,
+    `class` VARCHAR(191) NOT NULL,
+    `characterData` VARCHAR(191) NOT NULL,
+    `active` BOOLEAN NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
