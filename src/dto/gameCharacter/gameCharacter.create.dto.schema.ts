@@ -9,10 +9,10 @@ export const gameCharacterCreateValidationSchema: JSONSchemaType<GameCharacterCr
       name: { type: 'string' },
       uid: { type: 'number' },
       faction: { type: 'string' },
-      class: { type: 'string' },
+      charclass: { type: 'string' },
       characterData: { type: 'string' },
       active: { type: 'boolean' },
     },
-    required: ['name', 'uid', 'faction', 'class', 'characterData'],
+    required: ['name', 'uid', 'faction', 'charclass', 'characterData'],
     additionalProperties: false,
   };

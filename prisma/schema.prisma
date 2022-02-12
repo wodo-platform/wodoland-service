@@ -37,7 +37,7 @@ model GameCharacters {
   name          String     
   uid           Int
   faction       String
-  class         String
+  charclass     String
   characterData String
   active        Boolean
   createdAt     DateTime    @default(now())

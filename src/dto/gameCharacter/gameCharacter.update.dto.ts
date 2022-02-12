@@ -3,7 +3,7 @@ export interface GameCharacterUpdateDto {
   name: string;
   uid: number;
   faction: string;
-  class: string;
+  charclass: string;
   characterData: string;
   active: boolean;
 }

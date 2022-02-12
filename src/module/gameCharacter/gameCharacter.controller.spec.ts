@@ -41,7 +41,7 @@ describe('GameCharacterController', () => {
         uid: 1,
         active: true,
         faction: 'Human',
-        class: 'Ranger',
+        charclass: 'Ranger',
         characterData: '{}',
         createdAt: new Date(),
         updatedAt: new Date(),

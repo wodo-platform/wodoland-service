@@ -25,7 +25,7 @@ export class GameCharacterService {
       name: gameCharacterCreateDto.name,
       uid: gameCharacterCreateDto.uid,
       faction: gameCharacterCreateDto.faction,
-      class: gameCharacterCreateDto.class,
+      charclass: gameCharacterCreateDto.charclass,
       characterData: gameCharacterCreateDto.characterData,
       active: true,
     };
@@ -51,7 +51,7 @@ export class GameCharacterService {
       name: gameCharacterUpdateDto.name,
       uid: gameCharacterUpdateDto.uid,
       faction: gameCharacterUpdateDto.faction,
-      class: gameCharacterUpdateDto.class,
+      charclass: gameCharacterUpdateDto.charclass,
       characterData: gameCharacterUpdateDto.characterData,
       active: true,
     };
