@@ -155,24 +155,17 @@ export class GameCharacterService {
   }
 
   /**
-   * Sets deleted column to true (soft-delete) for entity by the given id
+   * Deletes entity by the given id
    * @param id
    * @returns GameCharacters
    */
   async delete(id: number): Promise<GameCharacters> {
-    const data = {
-      deleted: true,
-    };
     const gameCharacter: GameCharacters =
-      (await this.prisma.gameCharacters.update({
+      (await this.prisma.gameCharacters.delete({
         where: {
-          id: id,
-        },
-        data: {
-          ...data,
+          id,
         },
       })) as GameCharacters;
-
     return gameCharacter;
   }
 }

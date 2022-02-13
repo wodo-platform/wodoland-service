@@ -130,8 +130,8 @@ export class GameCharacterController {
     description: 'The gameCharacter has been successfully deleted.',
   })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @Delete(':id')
-  async delete(@Param() params) {
-    return this.GameCharacterService.delete(params.id);
+  @Delete('/delete/:id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return this.GameCharacterService.delete(id);
   }
 }
